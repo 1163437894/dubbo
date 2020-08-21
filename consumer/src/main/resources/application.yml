@@ -1,0 +1,22 @@
+server:
+  port: 7001
+
+spring:
+  application:
+    name: service-consumer
+dubbo:
+  application:
+    name: service-consumer
+  registry:
+    address: 127.0.0.1:2181
+    protocol: zookeeper
+    subscribe: true
+  protocol:
+    name: dubbo
+  monitor:
+    protocol: registry
+  consumer:
+    timeout: 1000
+    check: false
+    retries: 2
+
