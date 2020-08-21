@@ -2,10 +2,8 @@ package com.yjc.pojo;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 @Data
-public class User implements Serializable {
+public class User{
     private String name;
     private Integer age;
 }
