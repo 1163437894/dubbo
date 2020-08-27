@@ -10,8 +10,18 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 public class ShiroConfig {
+
+    /**
+     * 注入securityManager安全管理器
+     *
+     * @param realm
+     * @return
+     */
     @Bean
     public SecurityManager securityManager(MyRealm realm) {
         DefaultSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -19,14 +29,30 @@ public class ShiroConfig {
         return securityManager;
     }
 
+
+    /**
+     * 注入拦截器
+     *
+     * @param securityManager
+     * @return
+     */
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean filterFactoryBean = new ShiroFilterFactoryBean();
         filterFactoryBean.setSecurityManager(securityManager);
+        Map<String,String> filterMap=new HashMap<>(16);
+        filterMap.put("/swagger-ui.html","anon");
+        filterMap.put("/v2/**","anon");
+        filterMap.put("/swagger-resources/**","anon");
+        filterFactoryBean.setFilterChainDefinitionMap(filterMap);
         return filterFactoryBean;
     }
 
 
+    /**
+     * 开启注解支持 @RequiresRoles() @RequiresPermissions()
+     * @return
+     */
     @Bean
     public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();

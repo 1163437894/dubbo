@@ -1,6 +1,10 @@
 package com.yjc.controller;
 
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -8,14 +12,18 @@ import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("login")
+@Api(tags = "登录接口")
 public class LoginController {
 
-    @RequestMapping("doLogin")
+    @GetMapping("doLogin")
+    @ApiOperation("登录")
     public String doLogin() {
 
         Subject subject = SecurityUtils.getSubject();
@@ -34,8 +42,20 @@ public class LoginController {
 
     @RequiresRoles("admin")
     @RequiresPermissions("add")
-    @RequestMapping("/index")
+    @GetMapping("/index")
+    @ApiOperation("首页")
     public String index() {
         return "index!";
+    }
+
+
+    @GetMapping("ceshi")
+    @ApiOperation("测试参数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",value = "id",dataType = "integer",paramType = "query",required = true,defaultValue = "1"),
+            @ApiImplicitParam(name = "name",value = "名称",dataType = "string",paramType = "query",required = true,defaultValue = "ceshi")
+    })
+    public String ceshi(@RequestParam Integer id,@RequestParam String name){
+        return "ceshi";
     }
 }
