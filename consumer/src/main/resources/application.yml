@@ -14,10 +14,11 @@ dubbo:
   protocol:
     name: dubbo
     serialization: kryo
+    accesslog: true
   monitor:
     protocol: registry
   consumer:
     timeout: 1000
-    check: false
+    check: false #检查所调用的提供者服务是否可用
     retries: 2
 

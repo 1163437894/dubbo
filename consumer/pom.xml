@@ -20,8 +20,6 @@
     </parent>
 
 
-
-
     <dependencies>
 
         <dependency>
@@ -77,6 +75,15 @@
             <artifactId>kryo-serializers</artifactId>
             <version>0.42</version>
         </dependency>
+        <!--shiro-->
+        <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+
+
     </dependencies>
 
 

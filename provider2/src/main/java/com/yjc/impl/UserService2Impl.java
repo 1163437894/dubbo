@@ -1,17 +1,18 @@
 package com.yjc.impl;
 
+
 import com.yjc.pojo.User;
 import com.yjc.service.UserService;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.springframework.stereotype.Component;
 
 @DubboService
-public class UserServiceImpl implements UserService {
+public class UserService2Impl implements UserService {
+
     @Override
     public User getUser() {
-        User user= new User();
+        User user = new User();
+        user.setName("user2");
         user.setAge(1);
-        user.setName("yjc");
         return user;
     }
 }
