@@ -1,10 +1,12 @@
 package com.yjc.controller;
 
 
+import com.yjc.service.QuartzService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -21,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("login")
 @Api(tags = "登录接口")
 public class LoginController {
+
+    @DubboReference
+    private QuartzService quartzService;
 
     @GetMapping("doLogin")
     @ApiOperation("登录")
@@ -52,10 +57,19 @@ public class LoginController {
     @GetMapping("ceshi")
     @ApiOperation("测试参数")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id",value = "id",dataType = "integer",paramType = "query",required = true,defaultValue = "1"),
-            @ApiImplicitParam(name = "name",value = "名称",dataType = "string",paramType = "query",required = true,defaultValue = "ceshi")
+            @ApiImplicitParam(name = "id", value = "id", dataType = "integer", paramType = "query", required = true, defaultValue = "1"),
+            @ApiImplicitParam(name = "name", value = "名称", dataType = "string", paramType = "query", required = true, defaultValue = "ceshi")
     })
-    public String ceshi(@RequestParam Integer id,@RequestParam String name){
+    public String ceshi(@RequestParam Integer id, @RequestParam String name) {
         return "ceshi";
     }
+
+
+    @GetMapping("quartz")
+    @ApiOperation("测试定时器")
+    public String quartz() {
+        quartzService.execute();
+        return "1";
+    }
+
 }
